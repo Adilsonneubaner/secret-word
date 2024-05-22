@@ -1,0 +1,91 @@
+@charset "UTF-8";
+
+.game{
+    max-width: 96vw;
+}
+.pontos{
+    margin: 2em 0;
+    color: #e4f000;
+    font-size: 1.1em;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.425)
+}
+.pontos span{
+    font-weight: bold;
+}
+.game h1{
+    font-size: 3.5em;
+    padding: 0 20px;
+}
+.dica{
+    font-size: 2em;
+}
+.dica span{
+    color: #e4f000;
+    text-transform: uppercase;
+}
+#tentativas, .letras-utilizadas span{
+    font-size: 1.1em;
+    color: #e4f000;
+    font-weight: bold;
+}
+.container-palavra{
+    margin: 100px 0;
+    border: 1em solid #e4f000;
+    padding: 30px;
+    display: flex;  
+}
+.letter, .blank{
+    font-size: 70px;
+    line-height: 1.5em;
+    border: 3px solid black;
+    height: 100px;
+    width: 100px;
+    text-transform: uppercase;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+}
+.container-letra p{
+    font-size: 1.1em;
+    margin-bottom: 50px;
+}
+.container-letra form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.container-letra input{
+    width: 50px;
+    height: 50px;
+    margin-right: 1em;
+    font-size: 2em;
+    text-align: center;
+}
+.letras-utilizadas span{
+    margin-bottom: 50px;
+}
+.letras-utilizadas p{
+    font-size: 1.1em;
+}
+
+@media (max-width: 600px) {
+    .game h1{
+        font-size: 2.8em;
+    }
+    .container-palavra{
+        margin: 70px 10px;
+    }
+    .letter, .blank{
+        height: 50px;
+        font-size: 30px;
+        line-height: 1.7em;
+    }
+}
+@media (min-width:601px) and ( max-width: 768px){
+    .letter, .blank{
+        height: 80px;
+        font-size: 50px;
+        line-height: 1.7em;
+    }
+}

@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+#game-over h1{
+    font-size: 3.5em;
+    color: #e4f000;
+}
+#game-over p{
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+#pontuacao{
+    color: #e4f000;
+    font-weight: bold;
+}
