@@ -75,15 +75,14 @@ function App() {
       ])
       setChances((chances) => chances - 1)
     }
-    //Hook para monitorar condição de vitória
-    useEffect(() => {
+      //Monitorar condição de vitória
       const letrasUnicas = [... new Set(letras)]/*Esse set vai criar um array de letras únicas*/
       //Condição de vitoria
-      if(letrasAdivinhadas.length === letrasUnicas.length){
+      if(letrasAdivinhadas.length + 1 === letrasUnicas.length){
         setPontuacao((atualPontuacao) => (atualPontuacao += 100))
         startGame()
       }
-    }, [letrasAdivinhadas, letras, startGame]) 
+
   }
   
   //Hook para monitorar o fim do jogo
