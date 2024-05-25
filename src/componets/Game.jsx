@@ -18,12 +18,7 @@ const Game = ({
   //Função para enviar essa letra para a função de verificar
   const handleSubmit = (e) => {
     e.preventDefault()
-
-    verificarLetra(letraEscolhida)
-
-    setLetraEscolhida('')
-
-    focarInput.current.focus()
+    verificarLetra(letraEscolhida, focarInput, setLetraEscolhida)
   }
   return (
     <div className="game">

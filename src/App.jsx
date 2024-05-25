@@ -26,14 +26,12 @@ function App() {
   const [chances, setChances] = useState(3)
   const [pontuacao, setPontuacao] = useState(0)
 
-  //Função para selecionar uma categoria aleatória
+  //Função para selecionar uma categoria e palavra aleatória
   const PalavrasCategorias = useCallback(() => {
     const categorias = Object.keys(words)
     const categoriaAleatoria = categorias[Math.floor(Math.random() * Object.keys(categorias).length)]
-
     const palavraAleatoria = words[categoriaAleatoria][Math.floor(Math.random() * words[categoriaAleatoria].length)
     ]
-    
     return {categoriaAleatoria, palavraAleatoria}
   }, [words])
   
@@ -41,33 +39,28 @@ function App() {
   const startGame = useCallback(() =>{
     //Limpar dados iniciais
     limparDados()
-
     const {categoriaAleatoria, palavraAleatoria} = PalavrasCategorias()
-
     //Separando as letras das palavras
     let sequenciaLetras = palavraAleatoria.split('')
     sequenciaLetras = sequenciaLetras.map((l) => l.toLowerCase())
-
     //Passando os valores para o useState
     setCategoria(categoriaAleatoria)
     setPalavra(palavraAleatoria)
     setLetras(sequenciaLetras)
-    
-    console.log(categoria, palavra, letras)
     setGameStage(stages[1].name)
   }, [PalavrasCategorias])
   
   //Fução para verificar a letra
-  const verificarLetra = (letraEscolhida) =>{
+  const verificarLetra = (letraEscolhida, focarInput, setLetraEscolhida) =>{
     //Colocar todas as letras que chegarem em minusculo, para processar os dados
     const normalizarLetra = letraEscolhida.toLowerCase()
-
+    setLetraEscolhida('')
+    focarInput.current.focus()
     //Checar se a letra ja foi utilizada
     if(letrasUsadas.includes(normalizarLetra)){
       window.alert(`[ERRO] Você já utlizou a letra "${normalizarLetra}"! Use outra letra para continuar.`)
       return
     }
-
     //Verificar se a palavra contém a letra ou não
     if(letras.includes(normalizarLetra)){
       setLetrasAdivinhadas((atualLetrasAdivinhadas) =>[
@@ -82,26 +75,25 @@ function App() {
       ])
       setChances((chances) => chances - 1)
     }
-    
+    //Hook para monitorar condição de vitória
+    useEffect(() => {
+      const letrasUnicas = [... new Set(letras)]/*Esse set vai criar um array de letras únicas*/
+      //Condição de vitoria
+      if(letrasAdivinhadas.length === letrasUnicas.length){
+        setPontuacao((atualPontuacao) => (atualPontuacao += 100))
+        startGame()
+      }
+    }, [letrasAdivinhadas, letras, startGame]) 
   }
-
-  //Hook para monitorar a quantidade de chances
+  
+  //Hook para monitorar o fim do jogo
   useEffect(() => {
     if(chances <= 0){
       setGameStage(stages[2].name)
     }
   }, [chances])
 
-  //Hook para monitorar condição de vitória
-  useEffect(() => {
-    const letrasUnicas = [... new Set(letras)/*Esse set vai criar um array de letras únicas*/]
-
-  //Condição de vitoria
-  if(letrasAdivinhadas.length === letrasUnicas.length){
-    setPontuacao((atualPontuacao) => (atualPontuacao += 100))
-    startGame()
-  }
-  }, [letrasAdivinhadas, letras, startGame]) 
+  
 
   //Função para limpar dados ao fim do jogo
   const limparDados = () => {
@@ -112,11 +104,8 @@ function App() {
   //Função para novo jogo
   const novoJogo = () =>{
     limparDados()
-
     setChances(3)
-
     setPontuacao(0)
-
     setGameStage(stages[0].name)
   }
 
