@@ -83,12 +83,14 @@ function App() {
   }, [chances])
 
   //Monitorar condição de vitória
-  const letrasUnicas = [... new Set(letras)]/*Esse set vai criar um array de letras únicas*/
-  //Condição de vitoria
-  if(letrasAdivinhadas.length === letrasUnicas.length && letrasUnicas.length != 0){
-    setPontuacao((atualPontuacao) => (atualPontuacao += 100))
-    startGame()
-  }
+  useEffect(() =>{
+    const letrasUnicas = [... new Set(letras)]/*Esse set vai criar um array de letras únicas*/
+    //Condição de vitoria
+    if(letrasAdivinhadas.length === letrasUnicas.length && letrasUnicas.length != 0){
+      setPontuacao((atualPontuacao) => (atualPontuacao += 100))
+      startGame()
+    }
+  }, [letrasAdivinhadas, letras, startGame])
 
   //Função para limpar dados ao fim do jogo
   const limparDados = () => {
