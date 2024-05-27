@@ -51,11 +51,9 @@ function App() {
   }, [PalavrasCategorias])
   
   //Fução para verificar a letra
-  const verificarLetra = (letraEscolhida, focarInput, setLetraEscolhida) =>{
+  const verificarLetra = (letraEscolhida) =>{
     //Colocar todas as letras que chegarem em minusculo, para processar os dados
     const normalizarLetra = letraEscolhida.toLowerCase()
-    setLetraEscolhida('')
-    focarInput.current.focus()
     //Checar se a letra ja foi utilizada
     if(letrasUsadas.includes(normalizarLetra)){
       window.alert(`[ERRO] Você já utlizou a letra "${normalizarLetra}"! Use outra letra para continuar.`)
@@ -75,14 +73,6 @@ function App() {
       ])
       setChances((chances) => chances - 1)
     }
-      //Monitorar condição de vitória
-      const letrasUnicas = [... new Set(letras)]/*Esse set vai criar um array de letras únicas*/
-      //Condição de vitoria
-      if(letrasAdivinhadas.length + 1 === letrasUnicas.length){
-        setPontuacao((atualPontuacao) => (atualPontuacao += 100))
-        startGame()
-      }
-
   }
   
   //Hook para monitorar o fim do jogo
@@ -92,12 +82,19 @@ function App() {
     }
   }, [chances])
 
-  
+  //Monitorar condição de vitória
+  const letrasUnicas = [... new Set(letras)]/*Esse set vai criar um array de letras únicas*/
+  //Condição de vitoria
+  if(letrasAdivinhadas.length === letrasUnicas.length && letrasUnicas.length != 0){
+    setPontuacao((atualPontuacao) => (atualPontuacao += 100))
+    startGame()
+  }
 
   //Função para limpar dados ao fim do jogo
   const limparDados = () => {
     setLetrasAdivinhadas([])
     setLetrasUsadas([])
+    setChances(3)
   }
 
   //Função para novo jogo
